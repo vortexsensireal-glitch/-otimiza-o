@@ -1,0 +1,326 @@
+l
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VORTEX GAME BOOST</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+ background:#080b12;
+ color:white;
+ font-family:Arial,sans-serif;
+ padding:18px;
+}
+
+header{
+ text-align:center;
+ padding:25px 5px;
+}
+
+header h1{
+ font-size:30px;
+ color:#00eaff;
+ text-shadow:0 0 15px #00eaff;
+}
+
+header p{
+ color:#9aabbc;
+ margin-top:10px;
+ font-size:13px;
+}
+
+.status{
+ background:#121d2c;
+ border:1px solid #263b50;
+ padding:17px;
+ border-radius:15px;
+ margin-bottom:15px;
+}
+
+.status p{color:#9aabbc;font-size:12px}
+.status h3{color:#ff6262;margin-top:7px}
+
+.counter{
+ text-align:right;
+ color:#00eaff;
+ font-weight:bold;
+ margin-top:10px;
+}
+
+.progress{
+ height:8px;
+ background:#263447;
+ border-radius:20px;
+ margin-top:10px;
+ overflow:hidden;
+}
+
+#bar{
+ height:100%;
+ width:0%;
+ background:#00eaff;
+ transition:.3s;
+}
+
+.buttons{
+ display:flex;
+ gap:10px;
+ margin:15px 0;
+}
+
+button{
+ border:0;
+ border-radius:10px;
+ padding:14px 8px;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+.on{
+ background:#00d9e9;
+ color:#001015;
+ flex:1;
+}
+
+.off{
+ background:#29384b;
+ color:white;
+ flex:1;
+}
+
+h2{
+ font-size:17px;
+ margin:25px 0 13px;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px;
+}
+
+.card{
+ background:#121d2c;
+ border:1px solid #263b50;
+ border-radius:12px;
+ padding:13px 9px;
+ display:flex;
+ align-items:center;
+ gap:8px;
+ min-height:83px;
+}
+
+.emoji{font-size:23px}
+
+.info{flex:1;min-width:0}
+.info b{font-size:12px}
+.info small{
+ display:block;
+ color:#8799ad;
+ font-size:10px;
+ margin-top:5px;
+}
+
+.switch{
+ width:38px;
+ height:21px;
+ position:relative;
+ flex-shrink:0;
+}
+
+.switch input{display:none}
+
+.slider{
+ position:absolute;
+ inset:0;
+ background:#465267;
+ border-radius:20px;
+ cursor:pointer;
+}
+
+.slider:before{
+ content:"";
+ position:absolute;
+ width:15px;
+ height:15px;
+ background:white;
+ border-radius:50%;
+ top:3px;
+ left:3px;
+ transition:.2s;
+}
+
+.switch input:checked + .slider{
+ background:#00d9e9;
+}
+
+.switch input:checked + .slider:before{
+ transform:translateX(17px);
+}
+
+.notice{
+ background:#121d2c;
+ padding:14px;
+ border-radius:12px;
+ margin-top:22px;
+ color:#aebed0;
+ font-size:11px;
+ line-height:1.6;
+}
+
+footer{
+ text-align:center;
+ color:#65778d;
+ margin-top:20px;
+ font-size:11px;
+}
+
+@media(max-width:360px){
+ .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <h1>⚡ VORTEX ⚡</h1>
+ <h2>GAME BOOST</h2>
+ <p>PAINEL DE OTIMIZAÇÃO GAMER</p>
+</header>
+
+<div class="status">
+ <p>STATUS DO SISTEMA</p>
+ <h3 id="status">🔴 TUDO DESLIGADO</h3>
+ <div class="counter" id="counter">0 / 24 ATIVADAS</div>
+ <div class="progress">
+  <div id="bar"></div>
+ </div>
+</div>
+
+<div class="buttons">
+ <button class="on" onclick="toggleAll(true)">
+ ⚡ ATIVAR TODAS
+ </button>
+
+ <button class="off" onclick="toggleAll(false)">
+ ⏻ DESLIGAR TODAS
+ </button>
+</div>
+
+<h2>🎮 FUNÇÕES GAME BOOST</h2>
+
+<div class="grid" id="grid"></div>
+
+<div class="notice">
+ <b>⚠️ INFORMAÇÃO:</b><br>
+ Os botões controlam os estados dentro deste painel.
+ Para otimizar o celular de verdade, algumas configurações precisam ser feitas nas opções do próprio aparelho. Este HTML não modifica diretamente a RAM, CPU ou processos do sistema.
+</div>
+
+<footer>
+⚡ VORTEX GAME BOOST ⚡<br>
+VERSÃO 1.0
+</footer>
+
+<script>
+const funcoes=[
+["🚀","Modo Game Boost"],
+["🧹","Limpeza de arquivos"],
+["🔋","Economia de bateria"],
+["📶","Verificar conexão"],
+["🎮","Modo jogo"],
+["🔕","Silenciar notificações"],
+["🌡️","Atenção à temperatura"],
+["✨","Interface rápida"],
+["🎯","Foco competitivo"],
+["📱","Configuração de tela"],
+["🎧","Áudio gamer"],
+["⚙️","Ajustes do aparelho"],
+["🧠","Pausa inteligente"],
+["📡","Sinal de internet"],
+["🔄","Atualizações"],
+["📂","Organizar arquivos"],
+["🔔","Alertas do painel"],
+["🌙","Modo noturno"],
+["⏱️","Cronômetro gamer"],
+["🛡️","Segurança"],
+["🗂️","Organizar aplicativos"],
+["💡","Brilho da tela"],
+["📊","Resumo da sessão"],
+["💤","Descanso da tela"]
+];
+
+const grid=document.getElementById("grid");
+
+funcoes.forEach((f,i)=>{
+ const card=document.createElement("div");
+ card.className="card";
+
+ card.innerHTML=`
+ <div class="emoji">${f[0]}</div>
+ <div class="info">
+ <b>${f[1]}</b>
+ <small id="label${i}">DESLIGADO</small>
+ </div>
+ <label class="switch">
+ <input type="checkbox" id="f${i}">
+ <span class="slider"></span>
+ </label>
+ `;
+
+ grid.appendChild(card);
+
+ document.getElementById("f"+i)
+ .addEventListener("change",()=>{
+  document.getElementById("label"+i).textContent=
+  document.getElementById("f"+i).checked
+  ?"ATIVADO":"DESLIGADO";
+  atualizar();
+ });
+});
+
+function toggleAll(valor){
+ funcoes.forEach((f,i)=>{
+  document.getElementById("f"+i).checked=valor;
+  document.getElementById("label"+i).textContent=
+  valor?"ATIVADO":"DESLIGADO";
+ });
+ atualizar();
+}
+
+function atualizar(){
+ const ativos=funcoes.filter((f,i)=>
+ document.getElementById("f"+i).checked
+ ).length;
+
+ document.getElementById("counter").textContent=
+ ativos+" / 24 ATIVADAS";
+
+ document.getElementById("bar").style.width=
+ (ativos/24*100)+"%";
+
+ const status=document.getElementById("status");
+
+ if(ativos===0){
+  status.textContent="🔴 TUDO DESLIGADO";
+  status.style.color="#ff6262";
+ }else if(ativos===24){
+  status.textContent="🟢 TODAS ATIVADAS";
+  status.style.color="#35e58b";
+ }else{
+  status.textContent="🔵 PAINEL ATIVO";
+  status.style.color="#00eaff";
+ }
+}
+
+atualizar();
+</script>
+
+</body>
+  </html>
+  
